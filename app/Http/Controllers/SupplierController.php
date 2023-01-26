@@ -15,7 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::orderBy('id','desc')->get();
+        $supplier = Supplier::where('status',1)->orderBy('id','desc')->get();
         return response()->json([
             "error"=>false,
             "message"=>"Supplier lists",
@@ -102,7 +102,8 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-         $supplier->delete();
+         $supplier->status = 0;
+         $supplier->save();
          return response()->json([
             "error"=>false,
             "message"=>"Supplier is deleted",
